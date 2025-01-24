@@ -64,3 +64,40 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# Jumuiya Kiganjani WebApp - Dockerized Setup
+
+## Prerequisites
+
+Ensure you have the following installed:
+
+- **Docker**
+- **Docker Compose**
+
+## Steps to Run the Project
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/rwego1409/jumuiya.git
+   cd jumuiya
+
+cp .env.example .env
+        DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=user
+DB_PASSWORD=password
+
+
+docker-compose build
+
+docker-compose up -d
+
+ http://localhost:8080
+
+ docker-compose exec app php artisan migrate
+
+ docker-compose exec app php artisan config:cache
+docker-compose exec app php artisan key:generate
+docker-compose down

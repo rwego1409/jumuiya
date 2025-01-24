@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # PHP-FPM Service (running Laravel)
+  app:
+    build:
+      context: .
+    container_name: jumuiya_laravel
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    networks:
+      - laravel-network
+
+  # MySQL Database Service
+  db:
+    image: mysql:5.7
+    container_name: jumuiya_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - laravel-network
+
+  # Nginx Web Server Service
+  nginx:
+    image: nginx:latest
+    container_name: jumuiya_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - laravel-network
+
+volumes:
+  db_data:
+
+networks:
+  laravel-network:
+    driver: bridge
